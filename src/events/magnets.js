@@ -4,8 +4,10 @@
 
 const magnets = io.of('/magnets');
 magnets.on('connection', (socket) => {
-  console.log('We got a live one ...', socket.id);
-  socket.on('move', (payload) => {
-    magnets.emit('move', payload);
-  })
+  socket.on('placed', (payload) => {
+    socket.broadcast.emit('placed', payload);
+  });
+  socket.on('moving', (payload) => {
+    socket.broadcast.emit('moving', payload);
+  });
 })
